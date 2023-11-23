@@ -1,6 +1,8 @@
 SHELL := /bin/bash
+CONTAINER_NAME := postgres
+CONTAINER_PORT := 5433
 
-.PHONY: gen*, postgres_init
+.PHONY: gen*, postgres*
 
 gen:
 	$(MAKE) gen-grpc-stubs
@@ -24,4 +26,7 @@ clean:
 	find ./pkg -type f -name '*.pb.go' | xargs rm -f
 
 postgres_init:
-	docker run -p 5432:5432 -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=root -e -d --name postgres postgres
+	docker run -p $(CONTAINER_PORT):5432 -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=root -d --rm --name $(CONTAINER_NAME) postgres
+
+postgres_clean:
+	docker container rm -f $(CONTAINER_NAME)

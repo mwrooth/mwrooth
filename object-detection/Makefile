@@ -22,6 +22,3 @@ gen-grpc-stubs:
 clean:
 	find ./protobuf -type f -name '*.mock.go' | xargs rm -f
 	find ./protobuf -type f -name '*.pb.go' | xargs rm -f
-
-postgres_init:
-	docker run -p 5432:5432 -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=root -e -d --name postgres postgres
